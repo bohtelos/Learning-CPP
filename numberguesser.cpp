@@ -1,5 +1,6 @@
 #include <iostream>
 #include <random>
+#include <limits>
 
 int main() {
 
@@ -17,7 +18,20 @@ int main() {
 
     while (userGuess != secretNumber) {
         std::cout << "Enter the number: ";
-        std::cin >> userGuess;
+        if (!(std::cin >> userGuess)) {
+
+            std::cout << "Wrong input! Try again!\n";
+
+            std::cin.clear();
+
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            continue;
+
+        }
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
         attempts++;
 
         if (userGuess > secretNumber) {
