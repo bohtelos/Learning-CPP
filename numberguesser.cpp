@@ -2,19 +2,60 @@
 #include <random>
 #include <limits>
 
+int getDifficulty() {
+    int choice;
+
+    std::cout << "\n---- Choose difficulty----\n";
+    std::cout << "1. Easy\n";
+    std::cout << "2. Medium\n";
+    std::cout << "3. Hard\n";
+    std::cout << "Your choice: ";
+
+    while (!(std::cin >> choice) || choice < 1 || choice > 3) {
+
+        std::cout << "\nWrong choice! Enter 1, 2, or 3: ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    }
+
+    return choice;
+
+}
+
 int main() {
+
+    int minNum = 1;
+    int maxNum = 100;
+
+    int difficulty = getDifficulty();
+
+    if (difficulty == 1) {
+        maxNum = 50;
+        std::cout << "\nEasy difficulty chosen: there is a number guessed from 1 to 50\n";
+    }
+
+    else if (difficulty == 2) {
+        maxNum = 100;
+        std::cout << "\nMedium difficulty chosen: there is a number guessed from 1 to 100\n";
+    }
+
+    else if (difficulty == 3) {
+        maxNum = 200;
+        std::cout << "\nHard difficulty chosen: there is a number guessed from 1 to 200\n";
+    }
+
 
     std::random_device rd;
     std::mt19937 gen (rd());
 
-    std::uniform_int_distribution<> distrib(1, 100);
+    std::uniform_int_distribution<> distrib(minNum, maxNum);
 
     int secretNumber = distrib(gen);
     int attempts = 0;
     int userGuess = 0;
 
     std::cout << "---- Number guessing game----\n";
-    std::cout << "There is a guessed number from 1 to 100. Try guessing it\n";
 
     while (userGuess != secretNumber) {
         std::cout << "Enter the number: ";
