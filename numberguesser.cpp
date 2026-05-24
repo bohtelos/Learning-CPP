@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
 #include <limits>
+#include <cctype>
 
 int getDifficulty() {
     int choice;
@@ -27,6 +28,9 @@ int main() {
 
     int minNum = 1;
     int maxNum = 100;
+    char playAgain;
+
+    do {
 
     int difficulty = getDifficulty();
 
@@ -44,6 +48,7 @@ int main() {
         maxNum = 200;
         std::cout << "\nHard difficulty chosen: there is a number guessed from 1 to 200\n";
     }
+
 
 
     std::random_device rd;
@@ -89,6 +94,16 @@ int main() {
         }
 
     }
+
+    std::cout << "\nWould you like to play again? (y/n): ";
+    std::cin >> playAgain;
+    playAgain = std::tolower(playAgain);
+
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    } while (playAgain == 'y');
+
+    std::cout << "\nThank you for playing the game! Goodbye!\n";
 
     return 0;
 
