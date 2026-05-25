@@ -7,9 +7,9 @@ int getDifficulty() {
     int choice;
 
     std::cout << "\n---- Choose difficulty----\n";
-    std::cout << "1. Easy\n";
-    std::cout << "2. Medium\n";
-    std::cout << "3. Hard\n";
+    std::cout << "1. Easy: Unlimited attempts\n";
+    std::cout << "2. Medium: 7 attempts\n";
+    std::cout << "3. Hard: 5 attempts\n";
     std::cout << "Your choice: ";
 
     while (!(std::cin >> choice) || choice < 1 || choice > 3) {
@@ -28,6 +28,7 @@ int main() {
 
     int minNum = 1;
     int maxNum = 100;
+    int maxAttempts = 0;
     char playAgain;
 
     do {
@@ -35,16 +36,19 @@ int main() {
     int difficulty = getDifficulty();
 
     if (difficulty == 1) {
+        maxAttempts = 0;
         maxNum = 50;
         std::cout << "\nEasy difficulty chosen: there is a number guessed from 1 to 50\n";
     }
 
     else if (difficulty == 2) {
+        maxAttempts = 7;
         maxNum = 100;
         std::cout << "\nMedium difficulty chosen: there is a number guessed from 1 to 100\n";
     }
 
     else if (difficulty == 3) {
+        maxAttempts = 5;
         maxNum = 200;
         std::cout << "\nHard difficulty chosen: there is a number guessed from 1 to 200\n";
     }
@@ -91,6 +95,13 @@ int main() {
         else {
             std::cout << "You guessed the number! Well done!\n";
             std::cout << "To guess the number, it took you " << attempts << " attempts\n";
+            break;
+        }
+
+        if (maxAttempts > 0 && attempts >= maxAttempts) {
+            std::cout << "\nSorry, but you ran out of attempts\n";
+            std::cout << "\nThe secret number was: " << secretNumber << "\n";
+            break;
         }
 
     }
