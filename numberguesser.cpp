@@ -53,8 +53,6 @@ int main() {
         std::cout << "\nHard difficulty chosen: there is a number guessed from 1 to 200\n";
     }
 
-
-
     std::random_device rd;
     std::mt19937 gen (rd());
 
@@ -63,6 +61,7 @@ int main() {
     int secretNumber = distrib(gen);
     int attempts = 0;
     int userGuess = 0;
+    int remainingAttempts = maxAttempts;
 
     std::cout << "---- Number guessing game----\n";
 
@@ -84,6 +83,14 @@ int main() {
 
         attempts++;
 
+        if (maxAttempts > 0) {
+            remainingAttempts--;
+
+            std::cout << "\nRemaining attempts: " << remainingAttempts << "\n";
+
+        }
+
+
         if (userGuess > secretNumber) {
             std::cout << "Your number is higher than the number\n";
         }
@@ -98,13 +105,14 @@ int main() {
             break;
         }
 
-        if (maxAttempts > 0 && attempts >= maxAttempts) {
+        if (maxAttempts > 0 && remainingAttempts == 0) {
             std::cout << "\nSorry, but you ran out of attempts\n";
             std::cout << "\nThe secret number was: " << secretNumber << "\n";
             break;
         }
 
     }
+
 
     std::cout << "\nWould you like to play again? (y/n): ";
     std::cin >> playAgain;
