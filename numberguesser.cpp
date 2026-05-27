@@ -2,6 +2,8 @@
 #include <random>
 #include <limits>
 #include <cctype>
+#include <vector>
+#include <algorithm>
 
 int getDifficulty() {
     int choice;
@@ -30,6 +32,8 @@ int main() {
     int maxNum = 100;
     int maxAttempts = 0;
     char playAgain;
+
+    std::vector<int> highScores;
 
     do {
 
@@ -102,6 +106,15 @@ int main() {
         else {
             std::cout << "You guessed the number! Well done!\n";
             std::cout << "To guess the number, it took you " << attempts << " attempts\n";
+
+            highScores.push_back(attempts);
+            std::sort(highScores.begin(), highScores.end());
+
+            std::cout << "\n---- Your high scores ----\n";
+            for (int score : highScores) {
+                std::cout << score << " attempts\n";
+            }
+
             break;
         }
 
