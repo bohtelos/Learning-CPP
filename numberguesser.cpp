@@ -5,6 +5,16 @@
 #include <vector>
 #include <algorithm>
 
+void printHighScores(std::vector<int>& scores) {
+    std::sort(scores.begin(), scores.end());
+
+    std::cout << "\n---- Best attempts ----\n";
+    for (int score : scores) {
+        std::cout << score << " attempts\n";
+    }
+
+}
+
 int getDifficulty() {
     int choice;
 
@@ -34,6 +44,7 @@ int main() {
     char playAgain;
 
     std::vector<int> highScores;
+    highScores.reserve(20);
 
     do {
 
@@ -108,12 +119,8 @@ int main() {
             std::cout << "To guess the number, it took you " << attempts << " attempts\n";
 
             highScores.push_back(attempts);
-            std::sort(highScores.begin(), highScores.end());
 
-            std::cout << "\n---- Your high scores ----\n";
-            for (int score : highScores) {
-                std::cout << score << " attempts\n";
-            }
+            printHighScores(highScores);
 
             break;
         }
