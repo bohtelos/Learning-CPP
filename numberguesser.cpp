@@ -4,6 +4,7 @@
 #include <cctype>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
 void printHighScores(std::vector<int>& scores) {
     std::sort(scores.begin(), scores.end());
@@ -45,6 +46,15 @@ int main() {
 
     std::vector<int> highScores;
     highScores.reserve(20);
+
+    std::ifstream inFile("scores.txt");
+    if (inFile.is_open()) {
+        int score;
+        while (inFile >> score) {
+            highScores.push_back(score);
+        }
+        inFile.close();
+    }
 
     do {
 
@@ -141,6 +151,15 @@ int main() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     } while (playAgain == 'y');
+
+    std::ofstream outFile("scores.txt");
+    if (outFile.is_open()) {
+        for (int score : highScores) {
+            outFile << score << "\n";
+        }
+
+        outFile.close();
+    }
 
     std::cout << "\nThank you for playing the game! Goodbye!\n";
 
