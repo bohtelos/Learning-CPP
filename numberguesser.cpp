@@ -91,7 +91,7 @@ int main() {
     std::cout << "---- Number guessing game----\n";
 
     while (userGuess != secretNumber) {
-        std::cout << "Enter the number: ";
+        std::cout << "Enter the number (or 0 to give up): ";
         if (!(std::cin >> userGuess)) {
 
             std::cout << "Wrong input! Try again!\n";
@@ -105,6 +105,12 @@ int main() {
         }
 
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        if (userGuess == 0) {
+            std::cout << "\nYou gave up!\n";
+            std::cout << "The number was: " << secretNumber << "\n";
+            break;
+        }
 
         attempts++;
 
