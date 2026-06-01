@@ -52,54 +52,112 @@ int main() {
         std::cout << i << ". " << todoList[i].text << "\n";
     }
 
-        std::cout << "\nEnter task number to mark as done or -1 to skip: ";
-        std::cin >> taskNumber;
-        std::cin.ignore();
+        std::cout << "What would you like to do?\n";
+        std::cout << "1 - Mark task as done\n";
+        std::cout << "2 - Delete a task\n";
+        std::cout << "3 - Add a new task\n";
+        std::cout << "4 - Exit\n";
 
-        if (taskNumber == -1) {
-            std::cout << "Skipping...\n";
-        }
+        int choice;
+        bool validOption = false;
+        bool validTaskNumber = false;
 
-        else if (taskNumber < 0 || taskNumber >= todoList.size()) {
-            std::cout << "\nWrong input!\n";
+        while (!validOption) {
+
+        std::cout << "Enter your option: \n";
+        std::cin >> choice;
+
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input\n";
         }
         else {
-
-            todoList[taskNumber].isDone = true;
-            std::cout << "Task marked as done!\n";
+            validOption = true;
         }
-
-        std::cout << "\nDo you want to add new task? (Or press ENTER to leave): \n";
-        std::string newText;
-        std::getline(std::cin, newText);
-
-        if (!newText.empty()) {
-            Task newTask;
-            newTask.text = newText;
-            newTask.isDone = false;
-
-            todoList.push_back(newTask);
-            std::cout << "\nNew task has been added to the list.\n";
 
         }
 
-        std::cout << "\nDo you want to continue? (y/n): ";
-        char answer;
-        std::cin >> answer;
-        answer = std::tolower(answer);
+        if (choice == 1) {
+            validTaskNumber = false;
+            std::cout << "\nWhich task do you want to mark as done?\n";
 
-        switch (answer) {
-            case 'y':
-                keepGoing = true;
-                break;
-            case 'n':
-                keepGoing = false;
-                break;
-            default:
-                std::cout << "\nWrong command.\n";
-                break;
+            while (!validTaskNumber) {
+
+            std::cin >> taskNumber;
+            std::cin.ignore();
+
+            if (std::cin.fail()) {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Wrong input.\n";
+            }
+
+            else if (taskNumber < 0 || taskNumber >= todoList.size()) {
+                std::cout << "Wrong input.\n";
+            }
+
+            else {
+                validTaskNumber = true;
+                todoList[taskNumber].isDone = true;
+                std::cout << "Task marked as done!\n";
+            }
 
         }
+        }
+
+        else if (choice == 2) {
+            std::cout << "Which task do you want to delete?\n";
+
+            while (!validTaskNumber) {
+                std::cout << "Enter task number: \n";
+                std::cin >> taskNumber;
+                std::cin.ignore();
+
+                if (std::cin.fail()) {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cout << "Wrong input.\n";
+                }
+
+                else if (taskNumber < 0 || taskNumber >= todoList.size()) {
+                    std::cout << "Task out of range.\n";
+                }
+
+                else {
+                    validTaskNumber = true;
+                    todoList.erase(todoList.begin() + taskNumber);
+                    std::cout << "Task deleted!\n";
+                }
+
+            }
+        }
+
+        else if (choice == 3) {
+            std::cout << "Enter new task: \n";
+            std::string newText;
+            std::getline(std::cin, newText);
+
+            if (!newText.empty()) {
+                Task newTask;
+                newTask.text = newText;
+                newTask.isDone = false;
+                todoList.push_back(newTask);
+                std::cout << "Task added successfully.\n";
+            }
+            else {
+                std::cout << "Empty task not added.\n";
+            }
+        }
+
+        else if (choice == 4) {
+            keepGoing = false;
+        }
+
+        else {
+            std::cout << "Invalid input.\n";
+        }
+
     }
 
 
