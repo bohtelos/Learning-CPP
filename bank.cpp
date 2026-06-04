@@ -41,16 +41,32 @@ int main() {
         std::cout << "\n---- Bank Menu----\n";
         std::cout << "1 - Create an Account\n";
         std::cout << "2 - View All Accounts\n";
-        std::cout << "3 - Exit\n";
+        std::cout << "3 - Deposit\n";
+        std::cout << "4 - Withdraw\n";
+        std::cout << "5 - Exit\n";
 
         int choice;
         std::cin >> choice;
         std::cin.ignore();
+        
+        if (std::cin.fail()) {
+
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid Input!\n";
+            continue;
+   }
 
         if (choice == 1) {
             std::cout << "Enter name: \n";
             std::string name;
             std::getline(std::cin, name);
+
+            while (name.empty()) {
+                std::cout << "Name cannot be empty!\n";
+                std::cout << "Enter name: \n";
+                std::getline(std::cin, name);
+}
 
             Account newAccount;
             newAccount.accountNumber = nextAccountNumber;
@@ -73,6 +89,86 @@ int main() {
         }
 
         else if (choice == 3) {
+
+        std::cout << "Enter account number: \n";
+        int accountNumber;
+        std::cin >> accountNumber;
+        std::cin.ignore();
+
+        int foundIndex = -1;
+        for (int i = 0; i < accounts.size(); i++) {
+
+            if (accounts[i].accountNumber == accountNumber) {
+
+                foundIndex = i;
+                break;
+
+        }
+
+    }
+
+       if (foundIndex == -1) {
+
+            std::cout << "Account not found.\n";
+
+    }
+
+    else {
+
+        std::cout << "Enter amount to deposit: $";
+        double amount;
+        std::cin >> amount;
+
+        accounts[foundIndex].balance += amount;
+
+        std::cout << "Deposit successful!\n";
+        std::cout << "New balance: $" << accounts[foundIndex].balance << "\n";
+
+    }
+
+}
+
+        else if (choice == 4) {
+
+        std::cout << "Enter account number: \n";
+        int accountNumber = -1;
+        std::cin >> accountNumber;
+        std::cin.ignore();
+
+        int foundIndex = -1;
+        for (int i = 0; i < accounts.size(); i++) {
+
+            if (accounts[i].accountNumber == accountNumber) {
+
+                foundIndex = i;
+                break;
+
+        }
+
+    }
+
+    if (foundIndex == -1) {
+
+        std::cout << "Account not found.\n";
+
+    }
+
+    else {
+
+        std::cout << "Enter amount to deposit: $";
+        double amount;
+        std::cin >> amount;
+        accounts[foundIndex].balance -= amount;
+
+        std::cout << "Withdrawed successfully\n";
+        std::cout << "New balance: $" << accounts[foundIndex].balance << "\n";
+
+    }
+
+
+}
+
+        else if (choice == 5) {
             keepGoing = false;
             std::cout << "Logged out.\n";
         }
