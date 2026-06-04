@@ -119,6 +119,13 @@ int main() {
         double amount;
         std::cin >> amount;
 
+        while (amount <= 0 || std::cin.fail()) {
+            std::cout << "Invalid amount! Enter valid number: $";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin >> amount;
+        }
+
         accounts[foundIndex].balance += amount;
 
         std::cout << "Deposit successful!\n";
@@ -131,7 +138,7 @@ int main() {
         else if (choice == 4) {
 
         std::cout << "Enter account number: \n";
-        int accountNumber = -1;
+        int accountNumber;
         std::cin >> accountNumber;
         std::cin.ignore();
 
@@ -155,13 +162,25 @@ int main() {
 
     else {
 
-        std::cout << "Enter amount to deposit: $";
+        std::cout << "Enter amount to withdraw: $";
         double amount;
         std::cin >> amount;
-        accounts[foundIndex].balance -= amount;
 
-        std::cout << "Withdrawed successfully\n";
-        std::cout << "New balance: $" << accounts[foundIndex].balance << "\n";
+        while (amount <= 0 || std::cin.fail()) {
+            std::cout << "Invalid amount! Enter valid number: $";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin >> amount;
+        }
+
+        if (amount > accounts[foundIndex].balance) {
+            std::cout << "Insufficient funds!\n";
+        }
+        else {
+            accounts[foundIndex].balance -= amount;
+            std::cout << "Withdrawal successful!\n";
+            std::cout << "New balance: $" << accounts[foundIndex].balance << "\n";
+        }
 
     }
 
@@ -186,3 +205,4 @@ int main() {
 
     return 0;
 }
+
