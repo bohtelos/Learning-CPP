@@ -20,6 +20,10 @@ int main() {
         return 0;
     }
 
+    if (userInput.empty()) {
+        return 0;
+    }
+
     UnixUtils::toLowerCase(userInput);
 
     std::cout << userInput << "\n";
