@@ -1,8 +1,13 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <atomic>
 
-int main() {
+// Global
+
+std::atomic<bool> count = true;
+
+void clock_run() {
 
     // Initialize
 
@@ -12,7 +17,7 @@ int main() {
 
     // Loop and update
 
-    while (true) {
+    while (count) {
 
         system("clear");
 
@@ -41,6 +46,17 @@ int main() {
         std::this_thread::sleep_for(std::chrono::seconds(1));
 
     }
+
+}
+
+int main() {
+
+    // Manipulation
+
+    std::thread t(clock_run);
+    std::cin.get();
+    count = false;
+    t.join();
 
     // End
 
