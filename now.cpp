@@ -5,15 +5,49 @@
 
 // Global
 
+int hour = 0;
+int minute = 0;
+int second = 0;
+
 std::atomic<bool> count = true;
 
+void padZero(int h, int m, int s) {
+    
+    if (h < 10) {
+    
+    std::cout << "Hour: " << "0" << h << " ";
+    
+    } else {
+    
+    std::cout << "Hour: " << h << " ";
+    
+    }
+    
+    if (m < 10) {
+    
+    std::cout << "Minute: " << "0" << m << " ";
+    
+    } else {
+    
+    std::cout << "Minute: " << m << " ";
+    
+    }
+    
+    if (s < 10) {
+    
+    std::cout << "Second: " << "0" << s;
+    
+    } else {
+    
+    std::cout << "Second: " << s;
+    
+    }
+    
+    std::cout << std::flush;
+
+}
+
 void clock_run() {
-
-    // Initialize
-
-    int hour = 0;
-    int minute = 0;
-    int second = 0;
 
     // Loop and update
 
@@ -36,12 +70,8 @@ void clock_run() {
         if (hour == 24) {
             hour = 0;
         }
-
-        // See out
-
-        std::cout << "Hour: " << hour << "\n";
-        std::cout << "Minute: " << minute << "\n";
-        std::cout << "Second: " << second << "\n";
+        
+        padZero(hour, minute, second);
 
         std::this_thread::sleep_for(std::chrono::seconds(1));
 
